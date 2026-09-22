@@ -23,14 +23,31 @@ final class Polygon extends Shape
     public readonly array $points;
 
     /** @param list<Point> $points */
-    public function __construct(array $points, string $color = self::DEFAULT_COLOR)
+    public function __construct (
+        array $points, 
+        string $color = self::DEFAULT_COLOR)
     {
-        throw new \LogicException('À implémenter');
+
+    parent::__construct($color);
+
+    
+        if (count($points) < 3){
+            throw new \InvalidArgumentException
+            ("un polygone doit avoir au moins 3 sommets");
+        }
+        foreach ($points as $point) {
+            if (!$point instanceof Point) {
+                throw new \InvalidArgumentException ("un polygone ne peut contenir que des points");
+
+            }
+           
+        }
+         $this->points = $points;
     }
 
     public function pointCount(): int
     {
-        throw new \LogicException('À implémenter');
+        return count($this->points);
     }
 
     /**
@@ -42,6 +59,15 @@ final class Polygon extends Shape
      */
     public function area(): float
     {
-        throw new \LogicException('À implémenter');
+        $count = $this->pointCount();
+        $sum = 0.0;
+
+        for ($i = 0; $i < $count; $i++) {
+            $next = ($i + 1) % $count;
+            $sum += $this->points[$i]->x * $this->points[$next]->y
+                - $this->points[$next]->x * $this->points[$i]->y;
+        }
+
+        return abs($sum) / 2;
     }
 }
