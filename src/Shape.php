@@ -28,7 +28,8 @@ abstract class Shape
     /** TODO : `public readonly string $color;` déclarée ici, remplie par le constructeur. */
     public readonly string $color;
     // TODO : la validation, puis `$this->color = strtoupper($color);`.
-    public function __construct(string $color = self::DEFAULT_COLOR)
+    public function __construct(
+        string $color = self::DEFAULT_COLOR)
     {
         if (preg_match('/^#[0-9A-Fa-f]{6}$/', $color) !== 1) {
             throw new \InvalidArgumentException("Couleur invalide : {$color}");

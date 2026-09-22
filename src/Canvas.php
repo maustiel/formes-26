@@ -25,14 +25,29 @@ final class Canvas
     public private(set) array $shapes = [];
 
     /** TODO : `public readonly string $background;` déclarée ici, remplie par le constructeur. */
-
+   public readonly string $background;
     // TODO : promouvoir `$width` et `$height` en `public readonly`, valider,
     // puis `$this->background = strtoupper($background);`.
-    public function __construct(float $width, float $height, string $background = '#FFFFFF')
+    public function __construct(
+        public readonly float $width,
+        public readonly float $height, 
+        string $background = '#FFFFFF')
     {
-        throw new \LogicException('À implémenter');
-    }
+       
+          if ($width <= 0) {
+            throw new \InvalidArgumentException("longueur invalide : {$width}");
+        }
+        if ($height <= 0) {
+            throw new \InvalidArgumentException("hauteur invalide : {$height}");
+        }
 
+          if (preg_match('/^#[0-9A-Fa-f]{6}$/', $background) !== 1) {
+            throw new \InvalidArgumentException("Couleur invalide : {$background}");
+ }
+        $this->background = strtoupper($background); 
+          
+   
+    }
     /**
      * TODO : ajouter la forme à la liste.
      *
@@ -41,12 +56,12 @@ final class Canvas
      */
     public function add(Shape $shape): void
     {
-        throw new \LogicException('À implémenter');
+        $this->shapes [] = $shape;
     }
 
     public function isEmpty(): bool
     {
-        throw new \LogicException('À implémenter');
+        return count($this->shapes) ===0;
     }
 
     /**
@@ -57,6 +72,12 @@ final class Canvas
      */
     public function totalArea(): float
     {
-        throw new \LogicException('À implémenter');
+        $total = 0.0;
+
+        foreach ($this->shapes as $shape) {
+            $total += $shape->area ();
+        }
+     return $total;
+        
     }
 }
