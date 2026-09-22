@@ -14,35 +14,41 @@ namespace Shapes;
  *
  * Indice : `final readonly class Point implements \Stringable`.
  */
-final class Point
+final readonly class Point implements \Stringable
 {
     // TODO : le constructeur. Deux paramètres promus, `public float $x` et
     // `public float $y`. Rien d'autre à écrire dans le corps.
-
+    public function __construct(
+        public float $x, 
+        public float $y)
+    {
+    }
     /**
      * TODO : rendre un NOUVEAU point décalé de $dx et $dy.
      * Attention : l'objet courant ne doit pas bouger.
      */
     public function translate(float $dx, float $dy): self
     {
-        throw new \LogicException('À implémenter');
+       return new self($this->x + $dx, $this->y + $dy);
     }
-
+    
     /** TODO : la distance euclidienne. Racine de (dx² + dy²). */
     public function distanceTo(self $other): float
     {
-        throw new \LogicException('À implémenter');
+        $dx = $this->x - $other->x;
+        $dy = $this->y - $other->y;
+        return sqrt($dx * $dx + $dy * $dy);
     }
 
     /** TODO : deux points sont égaux s'ils ont les mêmes coordonnées. */
     public function equals(self $other): bool
     {
-        throw new \LogicException('À implémenter');
+        return $this->x === $other->x && $this->y === $other->y;
     }
 
     /** TODO : rendre « (10, -3) ». */
     public function __toString(): string
     {
-        throw new \LogicException('À implémenter');
+           return '(' . $this->x . ', ' . $this->y . ')';
     }
 }

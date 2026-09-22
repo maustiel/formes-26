@@ -26,16 +26,16 @@ abstract class Shape
     public const string DEFAULT_COLOR = '#000000';
 
     /** TODO : `public readonly string $color;` déclarée ici, remplie par le constructeur. */
-
+    public readonly string $color;
     // TODO : la validation, puis `$this->color = strtoupper($color);`.
     public function __construct(string $color = self::DEFAULT_COLOR)
     {
-        throw new \LogicException('À implémenter');
+        if (preg_match('/^#[0-9A-Fa-f]{6}$/', $color) !== 1) {
+            throw new \InvalidArgumentException("Couleur invalide : {$color}");
+        }
+
+        $this->color = strtoupper($color);
     }
 
-    /**
-     * Pas de corps : chaque forme calcule son aire à sa façon.
-     * Une méthode abstraite est une obligation faite aux enfants.
-     */
     abstract public function area(): float;
 }

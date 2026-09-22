@@ -16,20 +16,29 @@ namespace Shapes;
  * ÉTAPE 2 — Vous reviendrez ici : `Line` devra hériter de `Shape`, perdre sa
  * propre couleur au profit de celle du parent, et implémenter `area()`.
  */
-final class Line
+final class Line extends Shape
 {
     // TODO étape 1 : promouvoir `$start` et `$end` en `public readonly`, et garder
     //   la couleur dans une `public readonly string $color` validée et en majuscules.
     // TODO étape 2 : `extends Shape`, supprimer la couleur ici, et
     //   appeler `parent::__construct($color)`.
-    public function __construct(Point $start, Point $end, string $color = '#000000')
+    public function __construct(
+        public readonly Point $start, 
+        public readonly Point $end, 
+        string $color = self::DEFAULT_COLOR)
     {
-        throw new \LogicException('À implémenter');
+        parent::__construct($color);
+    }
+
+
+     public function area(): float
+    {
+        return 0.0;
     }
 
     /** TODO : la longueur du segment. Point vous rend déjà ce service. */
     public function length(): float
     {
-        throw new \LogicException('À implémenter');
+        return $this->start->distanceTo($this->end);
     }
 }
