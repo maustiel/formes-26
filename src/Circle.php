@@ -16,19 +16,26 @@ namespace Shapes;
 final class Circle extends Shape
 {
     // TODO : promouvoir `$center` et `$radius` en `public readonly`, valider le rayon.
-    public function __construct(Point $center, float $radius, string $color = self::DEFAULT_COLOR)
+    public function __construct(
+        public readonly Point $center, 
+        public readonly float $radius,
+        string $color = self::DEFAULT_COLOR)
     {
-        throw new \LogicException('À implémenter');
+        if ($radius <= 0) {
+            throw new \InvalidArgumentException("Rayon invalide : {$radius}");
+        }
+       
+        parent::__construct($color);
     }
 
     public function diameter(): float
     {
-        throw new \LogicException('À implémenter');
+        return 2 * $this->radius;
     }
 
     /** TODO : π × r². La constante `M_PI` existe déjà en PHP. */
     public function area(): float
     {
-        throw new \LogicException('À implémenter');
+        return M_PI * $this->radius * $this->radius;
     }
 }

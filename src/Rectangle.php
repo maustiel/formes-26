@@ -16,19 +16,29 @@ namespace Shapes;
 final class Rectangle extends Shape
 {
     // TODO : promouvoir les trois propriétés en `public readonly`, valider les dimensions.
-    public function __construct(Point $origin, float $width, float $height, string $color = self::DEFAULT_COLOR)
+    public function __construct(
+       public readonly Point $origin, 
+       public readonly float $width, 
+       public readonly float $height, 
+        string $color = self::DEFAULT_COLOR)
     {
-        throw new \LogicException('À implémenter');
+          if ($width <= 0) {
+            throw new \InvalidArgumentException("longueur invalide : {$width}");
+        }
+        if ($height <= 0) {
+            throw new \InvalidArgumentException("hauteur invalide : {$height}");
+        }
+        parent::__construct($color);
     }
 
     /** TODO : 2 × (largeur + hauteur). */
     public function perimeter(): float
     {
-        throw new \LogicException('À implémenter');
+        return 2 * ($this->width + $this->height);
     }
 
     public function area(): float
     {
-        throw new \LogicException('À implémenter');
+        return $this->width * $this->height;
     }
 }
